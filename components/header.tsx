@@ -39,11 +39,12 @@ function ComingSoonModal({ isOpen, onClose, label }: ComingSoonModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       style={{
-        backgroundColor: show ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0)",
-        transition: "background-color 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)",
+        backgroundColor: show ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0)",
+        transition: "background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
         pointerEvents: phase === "leaving" ? "none" : "auto",
+        backdropFilter: show ? "blur(4px)" : "blur(0px)",
       }}
       onClick={onClose}
       onKeyDown={(e) => {
@@ -54,25 +55,27 @@ function ComingSoonModal({ isOpen, onClose, label }: ComingSoonModalProps) {
       aria-label={`${label} - Coming soon`}
     >
       <div
-        className="rounded bg-background/90 px-10 py-8 shadow-lg text-center"
+        className="rounded-none bg-background px-12 py-10 shadow-2xl text-center border border-border"
         style={{
           opacity: show ? 1 : 0,
-          transform: show ? "scale(1) translateY(0)" : "scale(0.97) translateY(4px)",
-          transition: "opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)",
+          transform: show ? "scale(1) translateY(0)" : "scale(0.95) translateY(10px)",
+          transition: "opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+          backfaceVisibility: "hidden", // Убирает микро-мерцание при анимации
         }}
         onTransitionEnd={handleTransitionEnd}
         onClick={(e) => e.stopPropagation()}
-        onKeyDown={() => {}}
       >
-        <p className="text-lg font-serif text-foreground">{label}</p>
-        <p className="mt-2 text-xl font-serif text-foreground">Coming soon</p>
-        <button
-          onClick={onClose}
-          className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          type="button"
-        >
-          Close
-        </button>
+        <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground mb-2">{label}</p>
+        <p className="text-2xl font-serif text-foreground">Coming soon</p>
+        <div className="mt-8">
+          <button
+            onClick={onClose}
+            className="text-[10px] uppercase tracking-[0.2em] py-2 px-6 border border-foreground/20 hover:border-foreground transition-all duration-300"
+            type="button"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   )
