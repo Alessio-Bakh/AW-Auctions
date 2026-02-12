@@ -14,14 +14,14 @@ export default function Page() {
           <HeroSection />
         </RevealWrapper>
 
-        <RevealWrapper delay={200}>
+        {/* Увеличили задержку, чтобы секции не толкались */}
+        <RevealWrapper delay={300}>
           <NewsSection />
         </RevealWrapper>
       </main>
 
-      <RevealWrapper delay={100}>
-        <Footer />
-      </RevealWrapper>
+      {/* Убрали RevealWrapper с футера, чтобы избежать лагов при достижении низа страницы */}
+      <Footer />
     </div>
   )
 }
