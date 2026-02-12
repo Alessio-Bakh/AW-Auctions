@@ -17,24 +17,19 @@ function ComingSoonModal({ isOpen, onClose, label }: ComingSoonModalProps) {
   useEffect(() => {
     if (isOpen && (phase === "idle" || phase === "leaving")) {
       setPhase("entering")
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setPhase("visible")
-        })
-      })
+      const timeout = setTimeout(() => setPhase("visible"), 10)
+      return () => clearTimeout(timeout)
     } else if (!isOpen && (phase === "visible" || phase === "entering")) {
       setPhase("leaving")
+      // Даем 600мс (время CSS перехода) перед тем как переключить в idle и убрать из DOM
+      const timeout = setTimeout(() => setPhase("idle"), 600)
+      return () => clearTimeout(timeout)
     }
   }, [isOpen, phase])
 
-  const handleTransitionEnd = () => {
-    if (phase === "leaving") {
-      setPhase("idle")
-    }
-  }
-
   if (phase === "idle") return null
 
+  // show должен быть true и во время показа, и во время начала ухода (leaving)
   const show = phase === "visible"
 
   return (
