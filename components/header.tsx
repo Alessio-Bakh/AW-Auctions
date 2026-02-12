@@ -12,53 +12,43 @@ interface ComingSoonModalProps {
 }
 
 function ComingSoonModal({ isOpen, onClose, label }: ComingSoonModalProps) {
-  const [phase, setPhase] = useState<"idle" | "entering" | "visible" | "leaving">("idle")
+  const [mounted, setMounted] = useState(false)
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
-    if (isOpen && (phase === "idle" || phase === "leaving")) {
-      setPhase("entering")
-      const timeout = setTimeout(() => setPhase("visible"), 10)
+    if (isOpen) {
+      setMounted(true)
+      // Небольшая задержка для запуска анимации появления
+      const timeout = setTimeout(() => setShow(true), 20)
       return () => clearTimeout(timeout)
-    } else if (!isOpen && (phase === "visible" || phase === "entering")) {
-      setPhase("leaving")
-      // Даем 600мс (время CSS перехода) перед тем как переключить в idle и убрать из DOM
-      const timeout = setTimeout(() => setPhase("idle"), 600)
+    } else {
+      setShow(false)
+      // Ждем завершения анимации (600ms), прежде чем демонтировать компонент
+      const timeout = setTimeout(() => setMounted(false), 600)
       return () => clearTimeout(timeout)
     }
-  }, [isOpen, phase])
+  }, [isOpen])
 
-  if (phase === "idle") return null
-
-  // show должен быть true и во время показа, и во время начала ухода (leaving)
-  const show = phase === "visible"
+  if (!mounted) return null
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       style={{
         backgroundColor: show ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0)",
         transition: "background-color 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)",
-        pointerEvents: phase === "leaving" ? "none" : "auto",
-        willChange: "background-color",
+        pointerEvents: show ? "auto" : "none",
       }}
       onClick={onClose}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") onClose()
-      }}
-      role="dialog"
-      aria-modal="true"
-      aria-label={`${label} - Coming soon`}
     >
       <div
         className="rounded bg-background/90 px-10 py-8 shadow-lg text-center"
         style={{
           opacity: show ? 1 : 0,
-          transform: show ? "scale(1) translateY(0)" : "scale(0.97) translateY(4px)",
+          transform: show ? "scale(1) translateY(0)" : "scale(0.97) translateY(8px)",
           transition: "opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)",
           willChange: "opacity, transform",
-          backfaceVisibility: "hidden",
         }}
-        onTransitionEnd={handleTransitionEnd}
         onClick={(e) => e.stopPropagation()}
       >
         <p className="text-lg font-serif text-foreground">{label}</p>
@@ -116,10 +106,10 @@ const navItems = [
 ]
 
 const languages = [
-  { code: "FR", label: "Fran\u00e7ais" },
-  { code: "ES", label: "Espa\u00f1ol" },
-  { code: "RU", label: "\u0420\u0423" },
-  { code: "ZH", label: "\u4E2D\u6587" },
+  { code: "FR", label: "Français" },
+  { code: "ES", label: "Español" },
+  { code: "RU", label: "РУ" },
+  { code: "ZH", label: "中文" },
 ]
 
 export default function Header() {
@@ -334,61 +324,4 @@ export default function Header() {
                             setMobileMenuOpen(false)
                           }}
                         >
-                          <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle" style={{ backgroundColor: "#000000" }} />
-                          {subItem}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-
-            {/* Mobile Log in */}
-            <div className="py-4 border-b border-border">
-              <button
-                type="button"
-                className="text-base font-semibold text-foreground"
-                onClick={() => {
-                  setComingSoon("Log in")
-                  setMobileMenuOpen(false)
-                }}
-              >
-                Log in
-              </button>
-            </div>
-
-            {/* Mobile Languages */}
-            <div className="py-4">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-medium">
-                Languages
-              </p>
-              <div className="flex gap-4">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    type="button"
-                    className="text-sm font-semibold text-foreground hover:opacity-70 transition-opacity border border-border px-3 py-1.5"
-                    onClick={() => {
-                      setComingSoon(`${lang.label} version`)
-                      setMobileMenuOpen(false)
-                    }}
-                  >
-                    {lang.code}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </nav>
-        </div>
-      )}
-
-      {/* Coming Soon Modal */}
-      <ComingSoonModal
-        isOpen={comingSoon !== null}
-        onClose={() => setComingSoon(null)}
-        label={comingSoon || ""}
-      />
-    </>
-  )
-}
+                          <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle" style
