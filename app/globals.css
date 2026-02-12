@@ -56,3 +56,6 @@
 .animate-reveal {
   animation: reveal-up 0.7s ease-out forwards;
 }
+html {
+  scroll-behavior: smooth;
+}
