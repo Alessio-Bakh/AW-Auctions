@@ -197,24 +197,43 @@ export default function Footer() {
             <h3 className="text-base font-semibold text-foreground mb-4">
               Policies
             </h3>
-            <ul className="flex flex-col gap-2">
-              {[
-                "Privacy Policy",
-                "Terms & Conditions",
-                "AML & KYC Policy",
-                "Modern Slavery Statement",
-              ].map((item) => (
-                <li key={item}>
-                  <button
-                    type="button"
-                    className="text-sm hover:opacity-70 transition-opacity cursor-pointer text-foreground"
-                    onClick={() => setComingSoon(item)}
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul>
+<ul className="flex flex-col gap-2">
+  <li>
+    <a 
+      href="https://drive.google.com/file/d/1W136Szxs5c9KH9lsam6NfP4K_0k4aQH-/view?usp=sharing" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-sm hover:opacity-70 transition-opacity text-foreground"
+    >
+      Privacy Policy
+    </a>
+  </li>
+  <li>
+    <a 
+      href="https://drive.google.com/file/d/1tbSK3i9lrpm7uWaO9v1kIzyI_9p-Fajb/view?usp=sharing" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-sm hover:opacity-70 transition-opacity text-foreground"
+    >
+      Terms & Conditions
+    </a>
+  </li>
+  <li>
+    <a 
+      href="https://drive.google.com/file/d/1-4PD5yHduvMP5GGxXhOdUKkcSCHgfzFT/view?usp=sharing" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-sm hover:opacity-70 transition-opacity text-foreground"
+    >
+      AML & KYC Policy
+    </a>
+  </li>
+  <li>
+    <button type="button" className="text-sm hover:opacity-70 transition-opacity cursor-pointer text-foreground">
+      Modern Slavery Statement
+    </button>
+  </li>
+</ul>
           </div>
         </div>
       </footer>
