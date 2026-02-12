@@ -112,11 +112,11 @@ export default function NewsSection() {
             News / Stories / Updates
           </h2>
           <button 
-            onClick={() => setIsOpen(true)}
-            className="mt-4 text-sm font-medium underline underline-offset-4 hover:opacity-70 transition-opacity"
-          >
-            Be the first to know
-          </button>
+  onClick={() => setIsOpen(true)}
+  className="mt-6 text-xs md:text-sm uppercase tracking-[0.3em] font-light border-b border-transparent hover:border-foreground transition-all duration-300 pb-1"
+>
+  Be the first to know
+</button>
         </div>
       </div>
 
