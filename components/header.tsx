@@ -324,4 +324,61 @@ export default function Header() {
                             setMobileMenuOpen(false)
                           }}
                         >
-                          <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle" style
+                          <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle" style={{ backgroundColor: "#000000" }} />
+                          {subItem}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+
+            {/* Mobile Log in */}
+            <div className="py-4 border-b border-border">
+              <button
+                type="button"
+                className="text-base font-semibold text-foreground"
+                onClick={() => {
+                  setComingSoon("Log in")
+                  setMobileMenuOpen(false)
+                }}
+              >
+                Log in
+              </button>
+            </div>
+
+            {/* Mobile Languages */}
+            <div className="py-4">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-medium">
+                Languages
+              </p>
+              <div className="flex gap-4">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    className="text-sm font-semibold text-foreground hover:opacity-70 transition-opacity border border-border px-3 py-1.5"
+                    onClick={() => {
+                      setComingSoon(`${lang.label} version`)
+                      setMobileMenuOpen(false)
+                    }}
+                  >
+                    {lang.code}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={comingSoon !== null}
+        onClose={() => setComingSoon(null)}
+        label={comingSoon || ""}
+      />
+    </>
+  )
+}
